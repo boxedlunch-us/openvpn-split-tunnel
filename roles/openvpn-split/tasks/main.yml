@@ -46,9 +46,10 @@
     state: present
 
 - name: Copy routing script
-  copy:
-    src: routing.sh
+  template:
+    src: routing.j2
     dest: "{{ openvpn_install_path }}/routing.sh"
+    mode: '0777'
 
 - name: Make routing script executable
   command: chmod +x {{openvpn_install_path }}/routing.sh
