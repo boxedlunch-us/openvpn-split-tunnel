@@ -1,0 +1,35 @@
+- name: Install OpenVPN
+  apt: 
+    name: openvpn
+    update-cache: yes
+    state: present
+
+- name: Create OpenVPN Starup Script
+  copy: 
+    src: openvpn.conf
+    dest: /etc/init.d/openvpn.conf
+
+- name: Install unzip
+  apt: 
+    name: unzip
+
+- name: Move OpenVPN Configuration File
+  copy:
+    src: vpn-connection.conf
+    dest: /etc/openvpn/vpn-connection.conf
+
+- name: Update DNS Resolution
+  copy: 
+    src: update-resolv-conf
+    dest: /etc/openvpn/update-resolv-conf
+
+- name: Add VPN user
+  user: 
+    name: vpn
+    group: snugglefoot
+
+- name: Create iptables Script
+  template:
+    src: iptables.j2
+    dest: /etc/openvpn/iptables.sh
+  
