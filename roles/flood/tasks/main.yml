@@ -26,7 +26,7 @@
 
 - name: Get nodejs repo
   get_url:
-    url: http://example.com/path/file.conf
+    url: https://deb.nodesource.com/setup_12.x
     dest: /tmp/nodejs-repo.sh
     mode: a+x
 
