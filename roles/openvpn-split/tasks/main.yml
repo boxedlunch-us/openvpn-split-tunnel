@@ -33,3 +33,7 @@
     src: iptables.j2
     dest: /etc/openvpn/iptables.sh
   
+- name: Flush iptables rules
+  command: iptables -F
+
+
