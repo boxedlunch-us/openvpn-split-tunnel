@@ -5,3 +5,4 @@
   roles:
     - openvpn-split
     - rtorrent
+    - flood
