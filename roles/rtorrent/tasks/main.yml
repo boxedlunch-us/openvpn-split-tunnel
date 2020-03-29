@@ -10,11 +10,16 @@
     dest: /home/{{ rtorrent_user }}/.rtorrent.rc
 
 - name: Create torrent data structure
+  file:
+    path: "{{item}}"
+    with_items:
+      - /srv/torrent
+      - /srv/torrent/downloads
+      - /srv/torrent/.session
+
+- name: Modify ownership and permissions
   command: "{{item}}"
   with_items:
-    - mkdir /srv/torrent
-    - mkdir /srv/torrent/downloads
-    - mkdir /srv/torrent/.session
     - chmod 775 -R /srv/torrent
     - chown {{ rtorrent_user }}:{{ rtorrent_group }} -R /srv/torrent
     - chown {{ rtorrent_user }}:{{ rtorrent_group }} -R /home/{{ rtorrent_user }}/.rtorrent.rc
