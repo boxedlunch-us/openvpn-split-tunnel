@@ -3,7 +3,7 @@
 # Modified version by HTPC Guides – www.htpcguides.com
 
 VPNIF="tun0"
-VPNUSER={{vpn_user | quote}}
+VPNUSER="{{ vpn_user }}"
 GATEWAYIP=`ifconfig $VPNIF | egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}' | egrep -v '255|(127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})' | tail -n1`
 if [[ `ip rule list | grep -c 0x1` == 0 ]]; then
 ip rule add from all fwmark 0x1 lookup $VPNUSER
