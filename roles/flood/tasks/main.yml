@@ -8,7 +8,7 @@
     name: git
     state: present
 
-- name: Get nodejs repo
+- name: 
   command: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 - name: Install make
@@ -26,6 +26,12 @@
     name: g++
     state: present
 
+- name: Get nodejs repo
+  get_url:
+    url: http://example.com/path/file.conf
+    dest: /tmp/nodejs-repo.sh
+    mode: a+x
+    
 - name: Checkout flood repo
   git:
     repo: 'https://github.com/jfurrow/flood.git'
