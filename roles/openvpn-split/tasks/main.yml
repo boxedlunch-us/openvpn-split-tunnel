@@ -32,6 +32,7 @@
   template:
     src: iptables.j2
     dest: "{{ openvpn_install_path }}/iptables.sh"
+    mode: '0777'
   
 - name: Flush iptables rules
   command: iptables -F
