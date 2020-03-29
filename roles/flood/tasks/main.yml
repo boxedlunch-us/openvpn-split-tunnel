@@ -1,22 +1,30 @@
-- name: Install git and curl
-  apt:
-    name: "{{ item }}"
+- name: Install curl
+  apt: 
+    name: curl
     state: present
-    with_items:
-      - 'git'
-      - 'curl'
+
+- name: Install git
+  apt: 
+    name: git
+    state: present
 
 - name: Get nodejs repo
   command: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
-- name: Continuation of nodejs install
-  apt:
-    name: "{{ item }}"
+- name: Install make
+  apt: 
+    name: make
     state: present
-    with_items:
-      - 'gcc'
-      - 'g++'
-      - 'make'
+
+- name: Install gcc
+  apt: 
+    name: gcc
+    state: present
+
+- name: Install g++
+  apt: 
+    name: g++
+    state: present
 
 - name: Checkout flood repo
   git:
