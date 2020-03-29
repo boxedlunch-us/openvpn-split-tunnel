@@ -9,13 +9,12 @@
     src: rtorrent.j2
     dest: /home/{{ rtorrent_user }}/.rtorrent.rc
 
-- name: Create torrent data structure
+- name: Create torrent data structure 
   file:
-    path: "{{item}}"
-    with_items:
-      - /srv/torrent
-      - /srv/torrent/downloads
-      - /srv/torrent/.session
+    path: "/srv/{{item}}"
+    recurse: yes
+    state: directory
+  with_items: ["torrent", "torrent/downloads", "torrent/.session"]
 
 - name: Modify ownership and permissions
   command: "{{item}}"
