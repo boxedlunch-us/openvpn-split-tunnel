@@ -3,8 +3,8 @@
     pkg: "{{item}}"
     state: present
     with_items:
-      - git
-      - curl
+      - 'git'
+      - 'curl'
 
 - name: Get nodejs repo
   command: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
@@ -14,9 +14,9 @@
     pkg: "{{item}}"
     state: present
     with_items:
-      - gcc
-      - g++
-      - make
+      - 'gcc'
+      - 'g++'
+      - 'make'
 
 - name: Checkout flood repo
   git:
