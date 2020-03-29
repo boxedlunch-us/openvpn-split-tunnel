@@ -8,8 +8,6 @@
     name: git
     state: present
 
-- name: 
-  command: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 
 - name: Install make
   apt: 
@@ -31,7 +29,7 @@
     url: http://example.com/path/file.conf
     dest: /tmp/nodejs-repo.sh
     mode: a+x
-    
+
 - name: Checkout flood repo
   git:
     repo: 'https://github.com/jfurrow/flood.git'
