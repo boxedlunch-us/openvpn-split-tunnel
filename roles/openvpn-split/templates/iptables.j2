@@ -3,7 +3,7 @@
 # Modified version by HTPC Guides – www.htpcguides.com
 
 export INTERFACE="tun0"
-export VPNUSER="vpn"
+export VPNUSER= {{vpn_user | quote }}
 export LOCALIP={{ ansible_default_ipv4.interface | quote }}
 export NETIF="eth0"
 

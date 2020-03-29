@@ -4,7 +4,7 @@
     update-cache: yes
     state: present
 
-- name: Create OpenVPN Starup Script
+- name: Create OpenVPN startup script
   copy: 
     src: openvpn.conf
     dest: /etc/init.d/openvpn.conf
@@ -13,27 +13,51 @@
   apt: 
     name: unzip
 
-- name: Move OpenVPN Configuration File
+- name: Move OpenVPN configuration file
   copy:
     src: vpn-connection.conf
-    dest: /etc/openvpn/vpn-connection.conf
+    dest: "{{ openvpn_install_path }}/vpn-connection.conf"
 
-- name: Update DNS Resolution
+- name: Update DNS resolution
   copy: 
     src: update-resolv-conf
     dest: /etc/openvpn/update-resolv-conf
 
 - name: Add VPN user
   user: 
-    name: vpn
-    group: snugglefoot
+    name: "{{ vpn_user }}"
+    group: "{{ vpn_group }}"
 
-- name: Create iptables Script
+- name: Create iptables script
   template:
     src: iptables.j2
-    dest: /etc/openvpn/iptables.sh
+    dest: "{{ openvpn_install_path }}/iptables.sh"
   
 - name: Flush iptables rules
   command: iptables -F
 
+- name: Block vpn user's access to the internet
+  command: iptables -A OUTPUT ! -o lo -m owner --uid-owner {{ vpn_user }} -j DROP
 
+- name: Install persistent iptables
+  apt:
+    name: iptables-persistent
+    state: present
+
+- name: Copy routing script
+  copy:
+    src: routing.sh
+    dest: "{{ openvpn_install_path }}/routing.sh"
+
+- name: Make routing script executable
+  command: chmod +x {{openvpn_install_path }}/routing.sh
+
+- name: Append user table
+  lineinfile:
+    path: /etc/iproute2/rt_tables
+    line: '200    vpn'
+
+- name: Create reverse path filter
+  copy:
+    src: 9999-vpn.conf
+    dest: /etc/sysctl.d/9999-vpn.conf
