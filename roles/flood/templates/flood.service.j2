@@ -1,0 +1,12 @@
+[Service]
+WorkingDirectory=/srv/torrent/flood
+ExecStart=/usr/bin/npm start
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=notell
+User={{ flood_user }}
+Group={{ flood_group }}
+Environment=NODE_ENV=production
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,55 @@
+- name: Install git and curl
+  apt:
+    pkg: "{{item}}"
+    state: present
+    with_items:
+      - git
+      - curl
+
+- name: Get nodejs repo
+  command: curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+
+- name: Continuation of nodejs install
+  apt:
+    pkg: "{{item}}"
+    state: present
+    with_items:
+      - gcc
+      - g++
+      - make
+
+- name: Checkout flood repo
+  git:
+    repo: 'https://github.com/jfurrow/flood.git'
+    dest: /srv/torrent
+
+- name: Copy template config.js to live file
+  copy:
+    src: /srv/torrent/flood/config.template.js
+    dest: /srv/torrent/flood/config.js
+    
+- name: Install flood npm pkg
+  npm:
+    path: /srv/torrent/flood
+
+- name: Build flood package
+  command: npm --prefix /srv/torrent/flood run build
+
+- name: Change ownership of flood files
+  file:
+    path: /srv/torrent/flood
+    state: directory
+    recurse: yes
+    owner: "{{ flood_user }}"
+    group: "{{ flood_group }}"
+
+- name: Create flood service unit file
+  template:
+    src: flood.service.j2
+    dest: /etc/systemd/system/flood.service
+
+- name: Enable and start flood service
+  command: "{{item}}"
+  with_items:
+    - systemctl enable flood
+    - systemctl start flood
