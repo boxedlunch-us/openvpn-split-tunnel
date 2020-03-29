@@ -38,7 +38,7 @@
   command: iptables -F
 
 - name: Block vpn user's access to the internet
-  command: iptables -A OUTPUT ! -o lo -m owner --uid-owner {{ vpn_user }} -j DROP
+  command: iptables -A OUTPUT ! -o lo -m owner --uid-owner vpn -j DROP
 
 - name: Install persistent iptables
   apt:

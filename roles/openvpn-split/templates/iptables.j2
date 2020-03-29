@@ -3,9 +3,9 @@
 # Modified version by HTPC Guides – www.htpcguides.com
 
 export INTERFACE="tun0"
-export VPNUSER= {{vpn_user | quote }}
-export LOCALIP={{ ansible_default_ipv4.interface | quote }}
-export NETIF="eth0"
+export VPNUSER= "{{vpn_user }}"
+export LOCALIP="{{ ansible_default_ipv4.address}}"
+export NETIF="{{ ansible_default_ipv4.interface}}"
 
 # flushes all the iptables rules, if you have other rules to use then add them into the script
 iptables -F -t nat
