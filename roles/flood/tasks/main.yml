@@ -45,6 +45,7 @@
   copy:
     src: /srv/torrent/flood/config.template.js
     dest: /srv/torrent/flood/config.js
+    remote_src: yes
     
 - name: Install flood npm pkg
   npm:
