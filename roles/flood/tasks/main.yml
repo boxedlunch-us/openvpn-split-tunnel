@@ -33,7 +33,7 @@
 - name: Check for existing flood installation
   stat:
     path: /srv/torrent
-    register: flood_dir
+  register: flood_dir
 
 - name: Checkout flood repo
   git:
