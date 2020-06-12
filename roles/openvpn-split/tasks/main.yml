@@ -22,7 +22,12 @@
   copy: 
     src: update-resolv-conf
     dest: /etc/openvpn/update-resolv-conf
-
+    
+- name: Ensure group "somegroup" exists
+  group:
+    name: vpn
+    state: present
+    
 - name: Add VPN user
   user: 
     name: "{{ vpn_user }}"
