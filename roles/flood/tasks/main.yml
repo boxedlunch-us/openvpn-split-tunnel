@@ -34,7 +34,14 @@
   stat:
     path: /srv/torrent
   register: flood_dir
+  
+- name: Install flood npm pkg
+  npm:
+    path: /srv/torrent/flood
 
+- name: Build flood package
+  command: npm --prefix /srv/torrent/flood run build
+  
 - name: Checkout flood repo
   git:
     repo: 'https://github.com/jfurrow/flood.git'
@@ -46,13 +53,6 @@
     src: /srv/torrent/flood/config.template.js
     dest: /srv/torrent/flood/config.js
     remote_src: yes
-    
-- name: Install flood npm pkg
-  npm:
-    path: /srv/torrent/flood
-
-- name: Build flood package
-  command: npm --prefix /srv/torrent/flood run build
 
 - name: Change ownership of flood files
   file:
